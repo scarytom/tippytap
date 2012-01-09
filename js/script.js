@@ -11,20 +11,21 @@ com.scarytom.TippyTap = function() {
            },
     "times": function() {
                return times;
-             }
+             },
+    "lastTime": function() {
+                  return times[times.length - 1]
+                }
   };
 }
 
 $(document).ready(function() {
-  var lastTap = new Date().getTime();
+  var tippyTap = com.scarytom.TippyTap();
 
   function handleTap() {
-    var tapTime = new Date().getTime(),
-        note = $("<span><span/>");
-
-    note.text(tapTime - lastTap);
+    tippyTap.tap();
+    var note = $("<span><span/>");
+    note.text(tippyTap.lastTime());
     $("#main").append(note);
-    lastTap = tapTime;
   }
 
   $(document).keypress(handleTap);
