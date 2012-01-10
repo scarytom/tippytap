@@ -35,6 +35,20 @@ $(document).ready(function() {
     $("#main").append(note);
   }
 
+  function fileSelected(evt) {
+    var reader = new FileReader();
+    reader.onload = function(f) {
+      var wavefile = f.target.result,
+          wavedata = PCMData.decode(wavefile),
+          audio = document.createElement('audio');
+
+      audio.src = "data:audio.wav;base64," + btoa(PCMData(wavedata));
+	    audio.controls = true;
+      document.body.appendChild(audio);
+    };
+    reader.readAsBinaryString(evt.target.files[0]);
+  }
+
   setInterval(function() {
     randomSeries.append(new Date().getTime(), Math.random() * 10000);
   }, 500);
@@ -42,5 +56,7 @@ $(document).ready(function() {
   soundChart.addTimeSeries(randomSeries, { strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.2)', lineWidth: 4 });
   soundChart.addTimeSeries(tapSeries, { strokeStyle: 'rgba(255, 0, 0, 1)', fillStyle: 'rgba(255, 0, 0, 0.2)', lineWidth: 4 });
   soundChart.streamTo($("#soundChart").get(0), 50);
+
   $(document).keypress(handleTap);
+  $("#files").change(fileSelected);
 });
