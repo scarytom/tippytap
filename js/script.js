@@ -19,10 +19,13 @@ com.scarytom.TippyTap = function() {
 }
 
 $(document).ready(function() {
+  "use strict";
   var tippyTap = com.scarytom.TippyTap(),
       soundChart = new SmoothieChart(),
-      randomSeries = new TimeSeries(),
-      tapSeries = new TimeSeries();
+      wavSeries = new TimeSeries(),
+      tapSeries = new TimeSeries(),
+      waveData = { "sampleRate": 1, "data": [] },
+      origin = new Date().getTime();
 
   function handleTap() {
     var tapTime = new Date().getTime();
@@ -38,22 +41,27 @@ $(document).ready(function() {
   function fileSelected(evt) {
     var reader = new FileReader();
     reader.onload = function(f) {
-      var wavefile = f.target.result,
-          wavedata = PCMData.decode(wavefile),
-          audio = document.createElement('audio');
+      var wavefile = f.target.result;
 
-      audio.src = "data:audio.wav;base64," + btoa(PCMData(wavedata));
-	    audio.controls = true;
-      document.body.appendChild(audio);
+      alert("loaded");
+      origin = new Date().getTime();
+      //waveData = PCMData.decode(wavefile);
     };
     reader.readAsBinaryString(evt.target.files[0]);
   }
 
-  setInterval(function() {
-    randomSeries.append(new Date().getTime(), Math.random() * 10000);
-  }, 500);
+  function plot() {
+    var time = new Date().getTime(),
+        offset = time - origin,
+        sampleNo = Math.ceil(waveData.sampleRate * offset / 1000),
+        sample = waveData.data[sampleNo];
+    sample = sample ? sample : 0;
+    wavSeries.append(new Date().getTime(), sample);
+  }
+
+  setInterval(plot, 30);
       
-  soundChart.addTimeSeries(randomSeries, { strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.2)', lineWidth: 4 });
+  soundChart.addTimeSeries(wavSeries, { strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.2)', lineWidth: 4 });
   soundChart.addTimeSeries(tapSeries, { strokeStyle: 'rgba(255, 0, 0, 1)', fillStyle: 'rgba(255, 0, 0, 0.2)', lineWidth: 4 });
   soundChart.streamTo($("#soundChart").get(0), 50);
 
