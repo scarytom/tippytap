@@ -1,8 +1,47 @@
+body {
+  font-family: "Lucida Sans Unicode","Lucida Grande",Sans-Serif;
+  color: #003399;
+}
+
+div {
+  width: 600px;
+}
+
 div.scrollable {
-  height: 200px;
-  width: 382px;
+  height: 300px;
   overflow: auto;
   border: 1px solid #666;
-  background-color: #ccc;
   padding: 8px;
 }
+
+#log {
+  display: none;
+}
+
+table {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin: 20px;
+    text-align: left;
+    width: 480px;
+}
+
+table th {
+    border-bottom: 2px solid #6678B1;
+    color: #003399;
+    font-size: 14px;
+    font-weight: normal;
+    padding: 10px 8px;
+}
+
+table td {
+    border-bottom: 1px solid #CCCCCC;
+    color: #666699;
+    padding: 6px 8px;
+}
+
+table tbody tr:hover td {
+    color: #000099;
+}
+

@@ -57,6 +57,7 @@ com.scarytom.TippyTap = function() {
   return {
     "tap": tap,
     "times": function() { return times; },
+    "tapCount": function() { return times.length; },
     "averageInterval": averageInterval,
     "lastInterval": lastInterval,
     "lastTime": lastTapTime,
@@ -107,6 +108,14 @@ $(document).ready(function() {
     chart.tap();
     $("#interTap").val(tippyTap.lastBpm());
     $("#aveInterTap").val(tippyTap.averageBpm());
+
+    var row = $("<tr></tr>");
+    row.append($("<td></td>").text(tippyTap.tapCount()));
+    row.append($("<td></td>").text(tippyTap.lastInterval()));
+    row.append($("<td></td>").text(tippyTap.lastBpm()));
+    row.append($("<td></td>").text(tippyTap.averageBpm()));
+
+    $("#analysis-data").prepend(row);
     log(tippyTap.lastTime());
   }
 
