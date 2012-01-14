@@ -5,12 +5,14 @@ com.scarytom.TippyTap = function() {
   var origin,
       times,
       intervals,
+      intervalTotal,
       firsttap = true;
 
   function calibrate() {
     origin = new Date().getTime();
     times = [ 0 ];
     intervals = [];
+    intervalTotal = 0;
   }
 
   function bpm(durationMillis) {
@@ -31,9 +33,11 @@ com.scarytom.TippyTap = function() {
       return;
     }
 
-    var tapTime = new Date().getTime() - origin;
-    intervals.push(tapTime - lastTapTime());
+    var tapTime = new Date().getTime() - origin,
+        interval = tapTime - lastTapTime();
     times.push(tapTime);
+    intervals.push(interval);
+    intervalTotal += interval;
   }
 
   function lastInterval() {
@@ -44,13 +48,7 @@ com.scarytom.TippyTap = function() {
     if (intervals.length === 0) {
       return 0;
     }
-
-    var total = 0;
-    $.each(intervals, function(index, interval) {
-      total += interval;
-    });
-
-    return total / intervals.length;
+    return intervalTotal / intervals.length;
   }
 
   calibrate();
