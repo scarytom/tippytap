@@ -47,7 +47,8 @@ function TimeSeries(options) {
 
   // Start a resetBounds Interval timer desired
   if (options.resetBounds) {
-    this.boundsTimer = setInterval(function(thisObj) { thisObj.resetBounds(); }, options.resetBoundsInterval, this);
+    var that = this;
+    this.boundsTimer = setInterval(function() { that.options.resetBounds(); }, options.resetBoundsInterval, this);
   }
 }
 
