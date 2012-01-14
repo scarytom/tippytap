@@ -12,6 +12,13 @@ com.scarytom.TippyTap = function() {
     intervals = [];
   }
 
+  function bpm(durationMillis) {
+    if (durationMillis === 0) {
+      return 0;
+    }
+    return 60000 / durationMillis;
+  }
+
   function lastTapTime() {
     return times[times.length - 1];
   }
@@ -45,7 +52,9 @@ com.scarytom.TippyTap = function() {
     "times": function() { return times; },
     "averageInterval": averageInterval,
     "lastInterval": lastInterval,
-    "lastTime": lastTapTime
+    "lastTime": lastTapTime,
+    "lastBpm": function() { return bpm(lastInterval()); },
+    "averageBpm": function() { return bpm(averageInterval()); }
   };
 }
 
@@ -91,8 +100,8 @@ $(document).ready(function() {
   function handleTap() {
     tippyTap.tap();
     chart.tap();
-    $("#interTap").val(tippyTap.lastInterval());
-    $("#aveInterTap").val(tippyTap.averageInterval());
+    $("#interTap").val(tippyTap.lastBpm());
+    $("#aveInterTap").val(tippyTap.averageBpm());
     log(tippyTap.lastTime());
   }
 
