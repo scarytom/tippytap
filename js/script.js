@@ -62,7 +62,8 @@ com.scarytom.TippyTap = function() {
     "lastInterval": lastInterval,
     "lastTime": lastTapTime,
     "lastBpm": function() { return bpm(lastInterval()); },
-    "averageBpm": function() { return bpm(averageInterval()); }
+    "averageBpm": function() { return bpm(averageInterval()); },
+    "reset": function() { firstTap = true; }
   };
 }
 
@@ -141,7 +142,18 @@ $(document).ready(function() {
     chart.plot(new Date().getTime(), sample);
   }
 
-  setInterval(plot, 30);
+  function clear() {
+    $("#interTap").val(0);
+    $("#aveInterTap").val(0);
+    $("#analysis-data").empty();
+    $("#log").empty();
+    tippyTap.reset();
+    $("#interTap").focus();
+  }
+
+  clear();
+  //setInterval(plot, 30);
   $(document).keypress(handleTap);
   $("#files").change(fileSelected);
+  $("#restart-button").click(clear);
 });
