@@ -111,6 +111,7 @@ $(document).ready(function() {
 
     var row = $("<tr></tr>");
     row.append($("<td></td>").text(tippyTap.tapCount()));
+    row.append($("<td></td>").text(tippyTap.lastTime()));
     row.append($("<td></td>").text(tippyTap.lastInterval()));
     row.append($("<td></td>").text(tippyTap.lastBpm()));
     row.append($("<td></td>").text(tippyTap.averageBpm()));

@@ -4,7 +4,7 @@ body {
 }
 
 div {
-  width: 600px;
+  width: 650px;
 }
 
 div.scrollable {
@@ -24,7 +24,7 @@ table {
     font-size: 12px;
     margin: 20px;
     text-align: left;
-    width: 480px;
+    width: 550px;
 }
 
 table th {
