@@ -1,0 +1,8 @@
+div.scrollable {
+  height: 200px;
+  width: 382px;
+  overflow: auto;
+  border: 1px solid #666;
+  background-color: #ccc;
+  padding: 8px;
+}
