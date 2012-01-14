@@ -4,7 +4,8 @@ com.scarytom = {};
 com.scarytom.TippyTap = function() {
   var origin,
       times,
-      intervals;
+      intervals,
+      firsttap = true;
 
   function calibrate() {
     origin = new Date().getTime();
@@ -24,6 +25,12 @@ com.scarytom.TippyTap = function() {
   }
 
   function tap() {
+    if (firsttap) {
+      firsttap = false;
+      calibrate();
+      return;
+    }
+
     var tapTime = new Date().getTime() - origin;
     intervals.push(tapTime - lastTapTime());
     times.push(tapTime);
