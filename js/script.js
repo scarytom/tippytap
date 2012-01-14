@@ -19,7 +19,7 @@ com.scarytom.TippyTap = function() {
     if (durationMillis === 0) {
       return 0;
     }
-    return 60000 / durationMillis;
+    return (60000 / durationMillis).toFixed(3);
   }
 
   function lastTapTime() {
@@ -48,7 +48,7 @@ com.scarytom.TippyTap = function() {
     if (intervals.length === 0) {
       return 0;
     }
-    return intervalTotal / intervals.length;
+    return (intervalTotal / intervals.length).toFixed(3);
   }
 
   calibrate();
