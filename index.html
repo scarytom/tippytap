@@ -5,7 +5,8 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <link rel="stylesheet" href="css/style.css">
-  <script src="js/lib/modernizr-2.0.6.min.js"></script>
+  <script src="js/lib/modernizr-2.0.6.js"></script>
+  <!--[if IE]><script src="js/lib/excanvas.js"></script><![endif]-->
 </head>
 
 <body>
@@ -16,7 +17,9 @@
       <span>Tap any key to record BPM data. Press F5 to restart</span>
       <div id="load-section">
       </div>
-      <div id="graph-section"></div>
+      <div id="graph-section">
+        <canvas id="sound-chart-canvas" width="400" height="100"></canvas>
+      </div>
       <div id="analysis-section">
         <ul>
           <li><span>Last BPM:</span><input id="interTap" readonly="" value="0"/></li>

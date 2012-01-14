@@ -65,9 +65,8 @@ com.scarytom.TippyTap = function() {
   };
 }
 
-com.scarytom.Chart = function(chartElement) {
-  var chartCanvas = $("<canvas id='soundChart' width='400' height='100'></canvas>"),
-      chart = new SmoothieChart(),
+com.scarytom.Chart = function(chartCanvasElement) {
+  var chart = new SmoothieChart({ "labels": { "disabled": true } }),
       tapSeries = new TimeSeries(),
       wavSeries = new TimeSeries();
 
@@ -82,10 +81,9 @@ com.scarytom.Chart = function(chartElement) {
     wavSeries.append(time, value);
   }
 
-  $(chartElement).empty().append(chartCanvas);
   chart.addTimeSeries(wavSeries, { strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.2)', lineWidth: 4 });
   chart.addTimeSeries(tapSeries, { strokeStyle: 'rgba(255, 0, 0, 1)', fillStyle: 'rgba(255, 0, 0, 0.2)', lineWidth: 4 });
-  chart.streamTo(chartCanvas.get(0), 50);
+  chart.streamTo(chartCanvasElement.get(0), 50);
   return {
     "tap": tap,
     "plot": plot
@@ -95,7 +93,7 @@ com.scarytom.Chart = function(chartElement) {
 $(document).ready(function() {
   "use strict";
   var tippyTap = com.scarytom.TippyTap(),
-      chart = com.scarytom.Chart($("#graph-section")),
+      chart = com.scarytom.Chart($("#sound-chart-canvas")),
       waveData = { "sampleRate": 1, "data": [] },
       origin = new Date().getTime();
 
