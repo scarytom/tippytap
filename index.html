@@ -20,24 +20,28 @@
       <div id="graph-section">
         <canvas id="sound-chart-canvas" width="400" height="100"></canvas>
       </div>
-      <div id="analysis-section" class="scrollable">
-        <ul>
-          <li><span>Last BPM:</span><input id="interTap" readonly="" value="0"/></li>
-          <li><span>Average BPM:</span><input id="aveInterTap" readonly="" value="0"/></li>
-        </ul>
-        <table>
-          <thead>
-            <tr>
-              <th>Tap No</th>
-              <th>Tap Timestamp</th>
-              <th>Interval</th>
-              <th>Local BPM</th>
-              <th>Rolling Ave BPM</th>
-            </tr>
-          </thead>
-          <tbody id="analysis-data">
-          </tbody>
-        </table>
+      <br/>
+      <div "analysis-section">
+        <div class="formesque">
+          <label>Last BPM:</label><input id="interTap" readonly="" value="0"/><br/>
+          <label>Average BPM:</label><input id="aveInterTap" readonly="" value="0"/><br/>
+        </div>
+        <br/>
+        <div class="scrollable">
+          <table>
+            <thead>
+              <tr>
+                <th>Tap No</th>
+                <th>Tap Timestamp</th>
+                <th>Interval</th>
+                <th>Local BPM</th>
+                <th>Rolling Ave BPM</th>
+              </tr>
+            </thead>
+            <tbody id="analysis-data">
+            </tbody>
+          </table>
+        </div>
       </div>
       <div id="log" class="scrollable"></div>
     </div>

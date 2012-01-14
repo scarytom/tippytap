@@ -7,6 +7,14 @@ div {
   width: 650px;
 }
 
+br {
+  clear: left;
+}
+
+#log {
+  display: none;
+}
+
 div.scrollable {
   height: 300px;
   overflow: auto;
@@ -14,8 +22,24 @@ div.scrollable {
   padding: 8px;
 }
 
-#log {
-  display: none;
+div.formesque {
+  background-color: #f3f3f3;
+  border: solid 1px #a1a1a1;
+  padding: 10px;
+  width: 300px;
+}
+    
+div.formesque label, div.formesque input {
+  display: block;
+  width: 120px;
+  float: left;
+  margin-bottom: 10px;
+}
+ 
+div.formesque label {
+  text-align: right;
+  padding-right: 20px;
+  font-size: 14px;
 }
 
 table {
