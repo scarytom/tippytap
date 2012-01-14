@@ -100,8 +100,8 @@ $(document).ready(function() {
       origin = new Date().getTime();
 
   function log(message) {
-    $("#log").append($("<span></span>").text(message));
-    $("#log").append($("<br/>"));
+    $("#log").prepend($("<br/>"));
+    $("#log").prepend($("<span></span>").text(message));
   }
 
   function handleTap() {
