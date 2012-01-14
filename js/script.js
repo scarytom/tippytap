@@ -2,19 +2,50 @@ com = {};
 com.scarytom = {};
 
 com.scarytom.TippyTap = function() {
-  var origin = new Date().getTime(),
-      times = [];
+  var origin,
+      times,
+      intervals;
 
+  function calibrate() {
+    origin = new Date().getTime();
+    times = [ 0 ];
+    intervals = [];
+  }
+
+  function lastTapTime() {
+    return times[times.length - 1];
+  }
+
+  function tap() {
+    var tapTime = new Date().getTime() - origin;
+    intervals.push(tapTime - lastTapTime());
+    times.push(tapTime);
+  }
+
+  function lastInterval() {
+    return (intervals.length === 0) ? 0 : intervals[intervals.length - 1];
+  }
+
+  function averageInterval() {
+    if (intervals.length === 0) {
+      return 0;
+    }
+
+    var total = 0;
+    $.each(intervals, function(index, interval) {
+      total += interval;
+    });
+
+    return total / intervals.length;
+  }
+
+  calibrate();
   return {
-    "tap": function() {
-             times.push(new Date().getTime() - origin);
-           },
-    "times": function() {
-               return times;
-             },
-    "lastTime": function() {
-                  return times[times.length - 1]
-                }
+    "tap": tap,
+    "times": function() { return times; },
+    "averageInterval": averageInterval,
+    "lastInterval": lastInterval,
+    "lastTime": lastTapTime
   };
 }
 
@@ -48,7 +79,7 @@ com.scarytom.Chart = function(chartElement) {
 $(document).ready(function() {
   "use strict";
   var tippyTap = com.scarytom.TippyTap(),
-      chart = com.scarytom.Chart($("#graphsection")),
+      chart = com.scarytom.Chart($("#graph-section")),
       waveData = { "sampleRate": 1, "data": [] },
       origin = new Date().getTime();
 
@@ -60,6 +91,8 @@ $(document).ready(function() {
   function handleTap() {
     tippyTap.tap();
     chart.tap();
+    $("#interTap").val(tippyTap.lastInterval());
+    $("#aveInterTap").val(tippyTap.averageInterval());
     log(tippyTap.lastTime());
   }
 
