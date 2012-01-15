@@ -2,16 +2,17 @@ com = {};
 com.scarytom = {};
 
 com.scarytom.TippyTap = function() {
-  var origin,
-      times,
-      intervals,
-      intervalTotal,
+  "use strict";
+  var origin = 0,
+      times = [ 0 ],
+      intervals = [],
+      intervalTotal = 0,
       firsttap = true;
 
   function calibrate() {
     origin = new Date().getTime();
-    times = [ 0 ];
-    intervals = [];
+    times.length = 1;
+    intervals.length = 0;
     intervalTotal = 0;
   }
 
@@ -61,11 +62,12 @@ com.scarytom.TippyTap = function() {
     "lastTime": lastTapTime,
     "lastBpm": function() { return bpm(lastInterval()); },
     "averageBpm": function() { return bpm(averageInterval()); },
-    "reset": function() { firstTap = true; }
+    "reset": function() { firsttap = true; }
   };
 }
 
 com.scarytom.Chart = function(chartCanvasElement) {
+  "use strict";
   var chart = new SmoothieChart({ "labels": { "disabled": true } }),
       tapSeries = new TimeSeries(),
       wavSeries = new TimeSeries();
