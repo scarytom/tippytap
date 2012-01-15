@@ -104,6 +104,12 @@ $(document).ready(function() {
     $("#log").prepend($("<span></span>").text(message));
   }
 
+  function handleKeypress(e) {
+    if ((e && e.which === 32) || (window.event && window.event.keyCode === 32)) {
+      handleTap();
+    }
+  }
+
   function handleTap() {
     tippyTap.tap();
     chart.tap();
@@ -153,7 +159,7 @@ $(document).ready(function() {
 
   clear();
   //setInterval(plot, 30);
-  $(document).keypress(handleTap);
+  $(document).keypress(handleKeypress);
   $("#files").change(fileSelected);
   $("#restart-button").click(clear);
 });
