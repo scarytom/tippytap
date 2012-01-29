@@ -68,7 +68,8 @@ com.scarytom.TippyTap = function() {
 
 com.scarytom.Chart = function(chartCanvasElement) {
   "use strict";
-  var chart = new SmoothieChart({ "labels": { "disabled": true } }),
+  var enabled = false,
+      chart = new SmoothieChart({ "labels": { "disabled": true } }),
       tapSeries = new TimeSeries(),
       wavSeries = new TimeSeries();
 
@@ -80,22 +81,32 @@ com.scarytom.Chart = function(chartCanvasElement) {
   }
 
   function plot(time, value) {
-    wavSeries.append(time, value);
+    if (enabled) {
+      wavSeries.append(time, value);
+    }
+  }
+
+  function setEnableState(state) {
+    enabled = state;
+    $(chartCanvasElement).toggle(enabled);
+    if (enabled) {
+      chart.streamTo(chartCanvasElement, 50);
+    }
   }
 
   chart.addTimeSeries(wavSeries, { strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.2)', lineWidth: 4 });
   chart.addTimeSeries(tapSeries, { strokeStyle: 'rgba(255, 0, 0, 1)', fillStyle: 'rgba(255, 0, 0, 0.2)', lineWidth: 4 });
-  chart.streamTo(chartCanvasElement.get(0), 50);
   return {
     "tap": tap,
-    "plot": plot
+    "plot": plot,
+    "enable": setEnableState
   };
 }
 
 $(document).ready(function() {
   "use strict";
   var tippyTap = com.scarytom.TippyTap(),
-      chart = com.scarytom.Chart($("#sound-chart-canvas")),
+      chart = com.scarytom.Chart($("#sound-chart-canvas").get(0)),
       waveData = { "sampleRate": 1, "data": [] },
       origin = new Date().getTime();
 
@@ -157,9 +168,14 @@ $(document).ready(function() {
     $("#interTap").focus();
   }
 
+  chart.enable(false);
   clear();
   //setInterval(plot, 30);
   $(document).keypress(handleKeypress);
   $("#files").change(fileSelected);
   $("#restart-button").click(clear);
+  $("#graph-enabled").change(function() {
+    chart.enable($("#graph-enabled").prop("checked"));
+    $("#interTap").focus();
+  });
 });
